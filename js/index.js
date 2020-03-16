@@ -64,7 +64,7 @@ function addUserLike(event) {
                 body: JSON.stringify(payload)
             })
             .then(resp => resp.json())
-            .then(users => updateUsers(users))
+            .then(book => updateUsers(book))
     }
         else {
             let payload = {
@@ -96,10 +96,10 @@ function appendUser(user) {
     userList.appendChild(newUser)
 }
 
-function updateUsers(users) {
+function updateUsers(book) {
     let userList = document.getElementById('booklist')
         userList.innerText = ''
-    users.users.forEach(user => {
+    book.users.forEach(user => {
         let newUser = document.createElement('li')
             newUser.innerText = user.username
         userList.appendChild(newUser)

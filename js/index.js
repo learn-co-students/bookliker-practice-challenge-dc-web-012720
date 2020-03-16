@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     fetchBooks()
+    
 });
 
 function fetchBooks() {
@@ -17,11 +18,11 @@ function makeBookList(book) {
 }
  
 function renderBook(book) {
-
     let bookId = book.id
 
     let readBtn = document.createElement('button')
-    readBtn.innerText = "Read Book"
+    readBtn.innerText = ""
+    readBtn.id = "like-button"
     readBtn.addEventListener('click', () => addReader(book))
     let div = document.createElement('div')
     let showPanel = document.getElementById('show-panel')
@@ -54,16 +55,33 @@ function addReader(book_object){
     let user =   {
         "id": 1,
         "username": "pouros"
-      }
-    currentUsers.push(user)
-    fetch(`http://localhost:3000/books/${book_object.id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            Accept : "application/json"
-        },
-        body: JSON.stringify({ users : currentUsers })
-    })
-    .then(response => response.json())
-    .then( (book_object) => renderBook(book_object))
+    }
+
+    let liked = currentUsers.filter(user => (user.id === 1))
+
+    if (liked.length === 0) {
+        currentUsers.push(user)
+        fetch(`http://localhost:3000/books/${book_object.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Accept : "application/json"
+            },
+            body: JSON.stringify({ users : currentUsers })
+        })
+        .then(response => response.json())
+        .then( (book_object) => renderBook(book_object))
+    } else {
+        let notUsers = currentUsers.filter(person => (person.id !== user.id))
+        fetch(`http://localhost:3000/books/${book_object.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Accept : "application/json"
+            },
+            body: JSON.stringify({ users : notUsers })
+        })
+        .then(response => response.json())
+        .then( (book_object) => renderBook(book_object))
+    }
 }

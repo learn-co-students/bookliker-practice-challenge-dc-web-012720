@@ -52,11 +52,22 @@ function addUserLike(event) {
     .then(resp => resp.json())
     .then(book => {
         if(book.users.find(user => user.id == 1)) {
-            alert("You have already read this book")
-        }
+            let testUser = book.users.filter(user => user.id != 1)
+            let payload = {
+                users: testUser
+            }
+            fetch(`http://localhost:3000/books/${event.target.parentElement.dataset.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(resp => resp.json())
+            .then(users => updateUsers(users))
+    }
         else {
             let payload = {
-                id: 1,
                 users: [
                     ...book.users, {
                         id: 1,
@@ -83,4 +94,14 @@ function appendUser(user) {
     let newUser = document.createElement('li')
         newUser.innerText = 'pouros'
     userList.appendChild(newUser)
+}
+
+function updateUsers(users) {
+    let userList = document.getElementById('booklist')
+        userList.innerText = ''
+    users.users.forEach(user => {
+        let newUser = document.createElement('li')
+            newUser.innerText = user.username
+        userList.appendChild(newUser)
+    })
 }

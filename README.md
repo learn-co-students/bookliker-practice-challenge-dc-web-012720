@@ -22,7 +22,7 @@ This will serve your code on `http://localhost:3000`.
 
 ![example GIF](example.gif)
 
-You will be using the following backend to get the list of books. The expectation here is that you will include the following features
+You will be using the following backend to get the list of books. The expectation here is that you will include the following features'
 
 - Get a list of books & render them
   `http://localhost:3000/books`

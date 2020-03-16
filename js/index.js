@@ -15,13 +15,11 @@ function makeBookList(book) {
     li.addEventListener("click", () => renderBook(book) )
     list.append(li)
 }
-
+ 
 function renderBook(book) {
 
-    console.log(book)
     let bookId = book.id
 
-    console.log(bookId)
     let readBtn = document.createElement('button')
     readBtn.innerText = "Read Book"
     readBtn.addEventListener('click', () => addReader(book))
@@ -52,7 +50,6 @@ function displayUser(user){
 }
 
 function addReader(book_object){
-    console.log(book_object)
     let currentUsers = book_object.users
     let user =   {
         "id": 1,

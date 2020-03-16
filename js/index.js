@@ -31,7 +31,7 @@ function renderBook(book) {
     let description = document.createElement('p')
     let title = document.createElement('h2')
     let ul = document.createElement('ul')
-    debugger
+    
     book.users.forEach( user => ul.append(displayUser(user)) )
     
 
@@ -53,7 +53,6 @@ function displayUser(user){
 
 function addReader(book_object){
     console.log(book_object)
-    debugger
     let currentUsers = book_object.users
     let user =   {
         "id": 1,
@@ -66,8 +65,8 @@ function addReader(book_object){
             "Content-Type": "application/json",
             Accept : "application/json"
         },
-        body: JSON.stringify({"users" : currentUsers })
+        body: JSON.stringify({ users : currentUsers })
     })
     .then(response => response.json())
-    .then( (book_object) => console.log(book_object))
+    .then( (book_object) => renderBook(book_object))
 }
